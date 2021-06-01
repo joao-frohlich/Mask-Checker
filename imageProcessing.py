@@ -28,8 +28,9 @@ def drawTransparentMask(img, raw_masks, color):
         mask = processMask(raw_mask)
         overlay = img.copy()
         output = img.copy()
-        cv.drawContours(overlay,[mask],-1,(b,g,r),-1,cv.LINE_AA)
-    cv.addWeighted(overlay,0.5,output,1-0.5,0,output)
+        cv.polylines(output,[mask],True,(b,g,r))
+        #cv.drawContours(overlay,[mask],-1,(b,g,r),-1,cv.LINE_AA)
+    #cv.addWeighted(overlay,0.5,output,1-0.5,0,output)
     #Criar uma imagem a partir do output em forma de mosaico
     #Olhar codigo do professor em caso de duvida
     x,y,w,h = [int(x) for x in raw_masks['bbox']]
