@@ -34,7 +34,7 @@ def drawTransparentMask(img, raw_masks, color):
     #Criar uma imagem a partir do output em forma de mosaico
     #Olhar codigo do professor em caso de duvida
     x,y,w,h = [int(x) for x in raw_masks['bbox']]
-    return cv.resize(output[y:y+h,x:x+w],(80,80),interpolation=cv.INTER_CUBIC)
+    return cv.resize(output[y:y+h,x:x+w],(75,75),interpolation=cv.INTER_CUBIC)
     # return res_img+output[y:h, x:w]
 
 def drawMask(img, raw_masks):
@@ -94,11 +94,11 @@ def drawMasks(image_path, tmp_img_path, tmp_img_path2, annotationsRectangle, raw
         color = (color+1)%3
     list_2d = []
     z = 0
-    num_imgs_per_row = 16
+    num_imgs_per_row = 13
     num_rows = len(res_img)//num_imgs_per_row
     if (len(res_img)%num_imgs_per_row != 0): num_rows+=1
     if num_rows == 0: num_rows=1
-    b_im = np.zeros((80,80,3), dtype="uint8")
+    b_im = np.zeros((75,75,3), dtype="uint8")
     for i in range(0,num_rows):
         list_2d.append([])
         for j in range(0,num_imgs_per_row):
