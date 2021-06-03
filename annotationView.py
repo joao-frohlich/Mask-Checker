@@ -185,13 +185,11 @@ def next_image(num_images):
 def show_original_image():
     tmp_window = tk.Toplevel()
     tmp_window.configure(bg = "#1c1c1c")
-    tmp_window.geometry("1280x750")
+    tmp_window.geometry("1000x750")
     global my_image3
     my_image3 = ImageTk.PhotoImage(Image.open('/tmp/aux.jpg'))
     bg_label3 = tk.Label(tmp_window, image=my_image3)
     bg_label3.place(x=0,y=0)
-    exit_button = tk.Button(tmp_window, text = "Exit", bg="#1c1c1c", fg="#c1c1c1", activebackground = "#3c3c3c", pady=10, command = tmp_window.destroy)
-    exit_button.place(x=360,y=725,width=80, height=20)
     tmp_window.bind("<Return>", lambda x: tmp_window.destroy())
 #
 # def replicate_annotations(json_path):
