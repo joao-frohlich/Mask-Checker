@@ -125,6 +125,35 @@ def next_image(num_images):
 #     confirm_button.place(x=360,y=605,width=80, height=20)
 #     tmp_window.bind("<Return>", lambda x: save_undefined(tmp_window, json_path))
 #
+def mark_image_reason(current_image):
+    tmp_window = tk.Toplevel()
+    tmp_window.configure(bg = '#1c1c1c')
+    tmp_window.geometry("300x250")
+    reasons=['Carro não segmentado', 'Carro segmentado errado', 'Mascara sem carro', 'Mascara duplicada', 'Outros']
+    vars = {}
+    # aux_values = {}
+    checkboxes = {}
+    for i in range(0,5):
+        vars[i] = tk.IntVar()
+        # aux_values[i] = vars[i].get()
+        checkboxes[i] = tk.Checkbutton(
+            tmp_window,
+            text=reasons[i],
+            variable=vars[i],
+            onvalue=1,
+            offvalue=0,
+            bd=0,
+            padx=0,
+            pady=0
+        )
+        checkboxes[i].pack()
+    confirm_button = tk.Button(tmp_window, text = "Confirm", bg="#1c1c1c", fg="#c1c1c1", activebackground = "#3c3c3c", pady=10, command = lambda: mark_image_function(current_image, vars, tmp_window))
+    confirm_button.pack()
+
+def mark_image_function(current_image, vars, tmp_window):
+    jsonProcessing.mark_image_as_wrong(current_image, vars)
+    tmp_window.destroy()
+
 # def change_image(tmp_window, num_images):
 #     global entry1
 #     global data
@@ -259,7 +288,7 @@ def annotation_view(images_path, json_path, image_id, root):
         bg = "#1c1c1c",
         activebackground = "#3c3c3c",
         fg = "#c1c1c1",
-        command = lambda: jsonProcessing.mark_image_as_wrong(current_image)
+        command = lambda: mark_image_reason(current_image)
     )
     mark_image_button.place(x=15,y=110, width=170, height=25)
     #
@@ -367,7 +396,7 @@ def annotation_view(images_path, json_path, image_id, root):
     info_label.place(x=0, y=0)
     #
     top.bind("<Control-a>", lambda x: prev_image(num_images))
-    top.bind("<Control-w>", lambda x: jsonProcessing.mark_image_as_wrong(current_image))
+    top.bind("<Control-w>", lambda x: mark_image_reason(current_image))
     top.bind("<Control-s>", lambda x: next_image(num_images))
     # top.bind("<Control-p>", lambda x: prev_image(num_images, json_path, False))
     # top.bind("<Control-n>", lambda x: next_image(num_images, json_path, False))
