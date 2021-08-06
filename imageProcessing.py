@@ -38,11 +38,10 @@ def drawTransparentMask(img, raw_masks, color):
     # return res_img+output[y:h, x:w]
 
 def drawMask(img, raw_masks):
+    orig = img.copy()
     for raw_mask in raw_masks['segmentation']:
-        mask = processMask(raw_mask)
-        overlay = img.copy()
-        output = img.copy()
-        cv.drawContours(img,[mask],-1,(255,0,200),-1,cv.LINE_AA)
+        mask = processMask(raw_mask)    
+        cv.drawContours(img,[mask],-1,(0,255,0),-1,cv.LINE_AA)
     # b,g,r = [0,0,0]
     # if status == 0:
     #     g = 1
@@ -54,7 +53,7 @@ def drawMask(img, raw_masks):
     #cv.polylines(img, [mask], True, (b*255, g*255, r*255))
     #cv.polylines(img, [mask], True, (0, (not (status&1))*255, bool(status)*255))
     #Desenhar com cv.contour ou algo assim
-    cv.addWeighted(overlay,0,output,0,0,output)
+    cv.addWeighted(orig,0.6,img,0.4,0.0,img)
     return img
 
 def openImage(image_path):
