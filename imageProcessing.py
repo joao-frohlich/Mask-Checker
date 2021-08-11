@@ -2,6 +2,8 @@ import cv2 as cv
 import numpy as np
 from PIL import Image
 
+carousel = ((204,102,255),(0,255,0), (204,102,51), (0,0,255), (255,255,255), (128,128,128))
+
 def processMask(raw_mask):
     x = 0
     mask = []
@@ -37,11 +39,11 @@ def drawTransparentMask(img, raw_masks, color):
     return cv.resize(output[y:y+h,x:x+w],(75,75),interpolation=cv.INTER_CUBIC)
     # return res_img+output[y:h, x:w]
 
-def drawMask(img, raw_masks):
+def drawMask(img, raw_masks, color = carousel[0]):
     orig = img.copy()
     for raw_mask in raw_masks['segmentation']:
-        mask = processMask(raw_mask)    
-        cv.drawContours(img,[mask],-1,(0,255,0),-1,cv.LINE_AA)
+        mask = processMask(raw_mask)
+        cv.drawContours(img,[mask],-1,color,-1,cv.LINE_AA)
     # b,g,r = [0,0,0]
     # if status == 0:
     #     g = 1
@@ -53,7 +55,7 @@ def drawMask(img, raw_masks):
     #cv.polylines(img, [mask], True, (b*255, g*255, r*255))
     #cv.polylines(img, [mask], True, (0, (not (status&1))*255, bool(status)*255))
     #Desenhar com cv.contour ou algo assim
-    cv.addWeighted(orig,0.6,img,0.4,0.0,img)
+    cv.addWeighted(orig,0.7,img,0.3,0.0,img)
     return img
 
 def openImage(image_path):
@@ -84,13 +86,16 @@ def drawMasks(image_path, tmp_img_path, tmp_img_path2, annotationsRectangle, raw
     w_min = 10000
     h_min = 10000
     color = 0
+    colorMask = 0
+    modMask = len(carousel)
     for raw_mask in raw_masks:
         res_img.append(drawTransparentMask(img, raw_mask, color))
         w_min = min(w_min,res_img[z].shape[1])
         h_min = min(h_min,res_img[z].shape[0])
         z+=1
-        img2 = drawMask(img2, raw_mask)
+        img2 = drawMask(img2, raw_mask, carousel[colorMask])
         color = (color+1)%3
+        colorMask = (colorMask + 1)%modMask
     list_2d = []
     z = 0
     num_imgs_per_row = 13

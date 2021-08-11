@@ -96,9 +96,9 @@ def call_annotation_view(tmp_img, tmp_json):
     if True:
     # if tmp_img != '' and tmp_json != '':
         if tmp_img == '':
-            tmp_img = '/home/joao/codigos/pic/datasets/PKLOT'
+            tmp_img = '/home/paulo/Área de Trabalho/CNR-EXT_FULL_IMAGE_1000x750/FULL_IMAGE_1000x750'
         if tmp_json == '':
-            tmp_json = '/home/joao/codigos/pic/jsons/PKLot/New-JSON-Format/ufpr05.json'
+            tmp_json = '/home/paulo/Área de Trabalho/CNR-EXT_FULL_IMAGE_1000x750/FULL_IMAGE_1000x750/cnr-camera-4.json'
 
         tmp_window = tk.Toplevel()
         tmp_window.configure(padx = 20, pady = 20, bg = "#1c1c1c")
