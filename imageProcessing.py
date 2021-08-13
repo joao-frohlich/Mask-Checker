@@ -79,12 +79,12 @@ def drawMask(img, raw_masks, color = carousel[0]):
             max_y = aux_max_y
 
         cv.drawContours(img,[mask],-1,color,-1,cv.LINE_AA)
-        count = count + 1 
+        count = count + 1
 
     if count > 1:
         cv.rectangle(img, (min_x, max_y), (max_x, min_y), (255, 255, 255), 2)
 
-    
+
     # b,g,r = [0,0,0]
     # if status == 0:
     #     g = 1
@@ -151,4 +151,8 @@ def drawMasks(image_path, tmp_img_path, tmp_img_path2, annotationsRectangle, raw
     cv.imwrite(tmp_img_path, drawMosaic(list_2d))#cv.resize(drawMosaic(list_2d),(1280,720),interpolation=cv.INTER_CUBIC))
     #cv.imwrite(tmp_img_path, img)
     x0,y0,x1,y1 = annotationsRectangle
-    cv.imwrite(tmp_img_path2, img2[y0:(y1-y0),x0:(x1-x0)])
+    cv.line(img2,(x0,y0),(x1,y0),(0,0,0),1);
+    cv.line(img2,(x1,y0),(x1,y1),(0,0,0),1);
+    cv.line(img2,(x1,y1),(x0,y1),(0,0,0),1);
+    cv.line(img2,(x0,y1),(x0,y0),(0,0,0),1);
+    cv.imwrite(tmp_img_path2, img2)

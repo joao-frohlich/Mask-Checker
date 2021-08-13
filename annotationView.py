@@ -8,8 +8,11 @@ def set_image(image_path, image_data, image_id, im_width, im_height, annotations
     global my_image
     global image_frame
     global bg_label
+    global res_constraint
     imageProcessing.drawMasks(image_path, '/tmp/aux.jpg', '/tmp/aux2.jpg', annotationsRectangle, image_data)
-    my_image = ImageTk.PhotoImage(Image.open('/tmp/aux2.jpg').resize((800,600), Image.ANTIALIAS))
+    w = im_width
+    h = im_height
+    my_image = ImageTk.PhotoImage(Image.open('/tmp/aux2.jpg').resize((int(res_constraint*(w)),int(res_constraint*(h))), Image.ANTIALIAS))
     bg_label = tk.Label(image_frame, image=my_image)
     bg_label.place(x=0,y=0)
 #
@@ -234,13 +237,16 @@ def show_original_image():
 def annotation_view(images_path, json_path, image_id, root):
     top = tk.Toplevel()
     top.title("Annotations")
-    top.geometry("1000x620")
 
     global image_frame
     global data
     global imgs_path
     global current_image
     global json_data
+    global res_constraint
+
+    res_constraint = 1
+
     # global checkboxes
     # checkboxes = {}
     current_image = image_id
@@ -250,8 +256,13 @@ def annotation_view(images_path, json_path, image_id, root):
     if image_id > num_images:
         image_id = num_images
     #
+    # x0,y0,x1,y1 = data[image_id]['image_info']['annotationsRectangle']
+    w = data[image_id]['image_info']['width']
+    h = data[image_id]['image_info']['height']
+    top.geometry(str(int(res_constraint*(w))+200)+"x"+str(int(res_constraint*(h))+20))
+
     image_frame = tk.Frame(top)
-    image_frame.place(x=0,y=0, width=800, height=600)
+    image_frame.place(x=0,y=0, width=int(res_constraint*(w)), height=int(res_constraint*(h)))
     #
     set_image(images_path+'/'+data[image_id]['image_info']['file_name'], data[image_id]['annotations_info'], image_id, data[image_id]['image_info']['width'], data[image_id]['image_info']['height'], data[image_id]['image_info']['annotationsRectangle'])
     #
@@ -259,7 +270,7 @@ def annotation_view(images_path, json_path, image_id, root):
         top,
         bg = '#1c1c1c',
     )
-    side_menu.place(x=800,y=0, width=200, height=600)
+    side_menu.place(x=int(res_constraint*(w)),y=0, width=200, height=int(res_constraint*(h)))
 
     prev_image_button = tk.Button(
         side_menu,
@@ -330,7 +341,7 @@ def annotation_view(images_path, json_path, image_id, root):
         fg = "#c1c1c1",
         command = lambda: show_original_image()
     )
-    show_original_image_button.place(x=15,y=420, width=170, height=25)
+    show_original_image_button.place(x=15,y=155, width=170, height=25)
     #
     close_program_button = tk.Button(
         side_menu,
@@ -340,7 +351,7 @@ def annotation_view(images_path, json_path, image_id, root):
         fg = "#c1c1c1",
         command = root.destroy
     )
-    close_program_button.place(x=15,y=465, width=170, height=25)
+    close_program_button.place(x=15,y=200, width=170, height=25)
     #
     # select_undefined_button = tk.Button(
     #     side_menu,
@@ -364,7 +375,7 @@ def annotation_view(images_path, json_path, image_id, root):
     #
     global status_frame
     status_frame = tk.Frame(top, bg= "#1c1c1c")
-    status_frame.place(x=0,y=600,height=20, width=1000)
+    status_frame.place(x=0,y=int(res_constraint*(h)),height=20, width=int(res_constraint*(w))+200)
     #
     global status_label
     status_label = tk.Label(

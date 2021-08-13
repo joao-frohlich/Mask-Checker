@@ -2,8 +2,11 @@ import json
 import numpy as np
 import os
 import shutil
+import cv2 as cv
 
-os.mkdir('Problem_ufpr04')
+dataset = 'pucpr'
+
+os.mkdir('Problem_'+dataset)
 
 ids = []
 
@@ -33,7 +36,7 @@ problem_data = {
     'categories': [{'id': 1, 'name': 'cars', 'supercategory': 'vehicle', 'color': '#4a2c79', 'metadata': {}, 'keypoint_colors': []}],
 }
 
-a = json.load(open('ufpr04.json','r'))
+a = json.load(open(dataset+'.json','r'))
 
 num_annotations = {}
 
@@ -61,13 +64,19 @@ for i in a['annotations']:
 for i in a['images']:
     if i['id'] in ids:
         file_name = i['file_name'].split('/')[3]
-        shutil.copy(i['file_name'], 'Problem_ufpr04/'+file_name)
+        img = cv.imread(i['file_name']);
+        x0,y0,x1,y1 = i['annotationsRectangle']
+        cv.line(img,(x0,y0),(x1,y0),(0,0,0),1);
+        cv.line(img,(x1,y0),(x1,y1),(0,0,0),1);
+        cv.line(img,(x1,y1),(x0,y1),(0,0,0),1);
+        cv.line(img,(x0,y1),(x0,y0),(0,0,0),1);
+        cv.imwrite('Problem_'+dataset+'/'+file_name,img)
         problem_data['images'].append(
             {
                 'id': i['id']+im_offset,
                 'dataset_id': 9,
                 'category_ids': [1],
-                'path': '/datasets/Problem_ufpr04/'+file_name,
+                'path': '/datasets/Problem_'+dataset+'/'+file_name,
                 'width': 1280,
                 'height': 720,
                 'file_name': file_name,
@@ -82,4 +91,4 @@ for i in a['images']:
             }
         )
 
-json.dump(problem_data, open('problem_ufpr04.json','w'))
+json.dump(problem_data, open('problem_'+dataset+'.json','w'))
