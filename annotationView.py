@@ -245,7 +245,7 @@ def annotation_view(images_path, json_path, image_id, root):
     global json_data
     global res_constraint
 
-    res_constraint = 1
+    res_constraint = 2
 
     # global checkboxes
     # checkboxes = {}
