@@ -63,7 +63,8 @@ for i in a['annotations']:
 
 for i in a['images']:
     if i['id'] in ids:
-        file_name = i['file_name'].split('/')[3]
+        aux_file_name = i['file_name'].split('/')
+        file_name = aux_file_name[len(aux_file_name)-1]
         img = cv.imread(i['file_name']);
         x0,y0,x1,y1 = i['annotationsRectangle']
         cv.line(img,(x0,y0),(x1,y0),(0,0,0),1);
