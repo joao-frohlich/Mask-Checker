@@ -4,7 +4,7 @@ import os
 import shutil
 import cv2 as cv
 
-dataset = 'pucpr'
+dataset = 'vmlix'
 
 os.mkdir('Problem_'+dataset)
 
@@ -27,14 +27,15 @@ while True:
     except EOFError:
         break
 
-im_offset = 300000
-an_offset = 1000000
 
 problem_data = {
     'images': [],
     'annotations': [],
     'categories': [{'id': 1, 'name': 'cars', 'supercategory': 'vehicle', 'color': '#4a2c79', 'metadata': {}, 'keypoint_colors': []}],
 }
+
+im_offset = 0
+an_offset = 0
 
 a = json.load(open(dataset+'.json','r'))
 
