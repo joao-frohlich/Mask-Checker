@@ -23,7 +23,7 @@ def prev_image(num_images):
     global status_frame
     global status_label
     if (current_image > 1):
-        current_image-=1
+        current_image-=5
         image_id = current_image
         set_image(imgs_path+'/'+data[image_id]['image_info']['file_name'], data[image_id]['annotations_info'], image_id, data[image_id]['image_info']['width'], data[image_id]['image_info']['height'], data[image_id]['image_info']['annotationsRectangle'])
         status_label.forget()
@@ -62,8 +62,8 @@ def next_image(num_images):
     global current_image
     global status_frame
     global status_label
-    if (current_image < num_images):
-        current_image+=1
+    if (current_image < num_images+10):
+        current_image+=5
         image_id = current_image
         set_image(imgs_path+'/'+data[image_id]['image_info']['file_name'], data[image_id]['annotations_info'], image_id, data[image_id]['image_info']['width'], data[image_id]['image_info']['height'], data[image_id]['image_info']['annotationsRectangle'])
         status_label.forget()
@@ -245,7 +245,7 @@ def annotation_view(images_path, json_path, image_id, root):
     global json_data
     global res_constraint
 
-    res_constraint = 2
+    res_constraint = 1.5
 
     # global checkboxes
     # checkboxes = {}

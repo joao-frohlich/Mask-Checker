@@ -150,7 +150,10 @@ def drawMasks(image_path, tmp_img_path, tmp_img_path2, annotationsRectangle, raw
                 list_2d[i].append(b_im)
     cv.imwrite(tmp_img_path, drawMosaic(list_2d))#cv.resize(drawMosaic(list_2d),(1280,720),interpolation=cv.INTER_CUBIC))
     #cv.imwrite(tmp_img_path, img)
-    x0,y0,x1,y1 = annotationsRectangle
+    x0,y0,w,h = annotationsRectangle
+    x1 = x0 + w
+    y1 = y0 + h
+
     cv.line(img2,(x0,y0),(x1,y0),(0,0,0),1);
     cv.line(img2,(x1,y0),(x1,y1),(0,0,0),1);
     cv.line(img2,(x1,y1),(x0,y1),(0,0,0),1);
