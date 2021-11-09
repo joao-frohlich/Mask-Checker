@@ -13,7 +13,7 @@ if resp != 's':
     exit()
 
 p1 = (int(sys.argv[1]),int(sys.argv[2]))
-p2 = (int(sys.argv[3]),int(sys.argv[4]))
+p2 = (p1[0] + int(sys.argv[3]), p1[1] + int(sys.argv[4]))
 
 pathImgs = raiz.rglob('*.jpg')
 for path in pathImgs:

@@ -23,7 +23,7 @@ def prev_image(num_images):
     global status_frame
     global status_label
     if (current_image > 1):
-        current_image-=5
+        current_image-=1
         image_id = current_image
         set_image(imgs_path+'/'+data[image_id]['image_info']['file_name'], data[image_id]['annotations_info'], image_id, data[image_id]['image_info']['width'], data[image_id]['image_info']['height'], data[image_id]['image_info']['annotationsRectangle'])
         status_label.forget()
@@ -63,7 +63,7 @@ def next_image(num_images):
     global status_frame
     global status_label
     if (current_image < num_images+10):
-        current_image+=5
+        current_image+=1
         image_id = current_image
         set_image(imgs_path+'/'+data[image_id]['image_info']['file_name'], data[image_id]['annotations_info'], image_id, data[image_id]['image_info']['width'], data[image_id]['image_info']['height'], data[image_id]['image_info']['annotationsRectangle'])
         status_label.forget()
