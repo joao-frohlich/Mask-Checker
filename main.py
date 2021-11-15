@@ -96,9 +96,9 @@ def call_annotation_view(tmp_img, tmp_json):
     if True:
     # if tmp_img != '' and tmp_json != '':
         if tmp_img == '':
-            tmp_img = '/home/paulo/Área de Trabalho/PLDs'
+            tmp_img = '/home/paulo/Área de Trabalho/PKLot'
         if tmp_json == '':
-            tmp_json = '/home/paulo/Área de Trabalho/PLDs/qridr.json'
+            tmp_json = '/home/paulo/Área de Trabalho/PKLot/ufpr04.json'
 
         tmp_window = tk.Toplevel()
         tmp_window.configure(padx = 20, pady = 20, bg = "#1c1c1c")

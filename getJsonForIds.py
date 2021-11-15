@@ -4,7 +4,7 @@ import os
 import shutil
 import cv2 as cv
 
-dataset = 'vmlix'
+dataset = 'ufpr04'
 
 os.mkdir('Problem_'+dataset)
 
@@ -73,6 +73,11 @@ for i in a['images']:
         cv.line(img,(x1,y1),(x0,y1),(0,0,0),1);
         cv.line(img,(x0,y1),(x0,y0),(0,0,0),1);
         cv.imwrite('Problem_'+dataset+'/'+file_name,img)
+        try:
+            num_annot = num_annotations[i['id']]
+        except:
+            num_annot = 0
+
         problem_data['images'].append(
             {
                 'id': i['id']+im_offset,
@@ -84,7 +89,7 @@ for i in a['images']:
                 'file_name': file_name,
                 'annotated': False,
                 'annotating': [],
-                'num_annotations': num_annotations[i['id']],
+                'num_annotations': num_annot,
                 'metadata': {},
                 'deleted': False,
                 'milliseconds': 0,
