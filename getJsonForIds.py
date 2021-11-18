@@ -4,7 +4,7 @@ import os
 import shutil
 import cv2 as cv
 
-dataset = 'ufpr04'
+dataset = 'cnr-camera-1'
 
 os.mkdir('Problem_'+dataset)
 
@@ -68,6 +68,8 @@ for i in a['images']:
         file_name = aux_file_name[len(aux_file_name)-1]
         img = cv.imread(i['file_name']);
         x0,y0,x1,y1 = i['annotationsRectangle']
+        x1 = x1 + x0
+        y1 = y1 + y0
         cv.line(img,(x0,y0),(x1,y0),(0,0,0),1);
         cv.line(img,(x1,y0),(x1,y1),(0,0,0),1);
         cv.line(img,(x1,y1),(x0,y1),(0,0,0),1);
